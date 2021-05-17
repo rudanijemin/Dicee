@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -10,13 +11,28 @@ void main() {
           title: Text('Dicee'),
           backgroundColor: Colors.red,
         ),
-        body: DicePage(),
+        body: Dicepage(),
       ),
     ),
   );
 }
 
-class DicePage extends StatelessWidget {
+class Dicepage extends StatefulWidget {
+  @override
+  _DicepageState createState() => _DicepageState();
+}
+
+class _DicepageState extends State<Dicepage> {
+  int leftDiceNumber = 1;
+  int rightDiceNumber = 4;
+
+  void changedice() {
+    leftDiceNumber = Random().nextInt(6) + 1;
+    rightDiceNumber = Random().nextInt(6) + 1;
+    print('left dicenumber=$leftDiceNumber');
+    print('right dicenumber=$rightDiceNumber');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -24,23 +40,26 @@ class DicePage extends StatelessWidget {
         children: <Widget>[
           Expanded(
             child: FlatButton(
-              onPressed: (){
-                print('left button press');
+              onPressed: () {
+                setState(() {
+                  changedice();
+                });
               },
-
               child: Image(
-                image: AssetImage('images/dice1.png'),
+                image: AssetImage('images/dice$leftDiceNumber.png'),
               ),
             ),
           ),
           Expanded(
             child: FlatButton(
-              onPressed: (){
-                print('right button press');
+              onPressed: () {
+                setState(() {
+                  changedice();
+                });
               },
-                 //All saide same sapce (padding)
+              //All saide same sapce (padding)
               child: Image(
-                image: AssetImage('images/dice5.png'),
+                image: AssetImage('images/dice$rightDiceNumber.png'),
               ),
             ),
           ),
